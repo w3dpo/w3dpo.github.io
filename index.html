@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+	<script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Inknut+Antiqua" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <title>W3DPO Judging</title>
+
+    <style>
+        .container{
+            background: #a044ff;
+            background: -webkit-linear-gradient(to top,#0D9547,#105CAF);
+            background: linear-gradient(to top,#0D9547,#105CAF);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            position: fixed;
+            top:0;
+            left:0;
+            width: 98%;
+            height: 100%;
+            padding: 15px;
+        }
+        .opensans{
+            font-family: 'Open Sans', sans-serif;
+        }
+        .text-white{
+            color: white;
+        }
+        .nopadding{
+            padding: 0;
+        }
+        .inknut{
+            font-family: 'Inknut Antiqua', serif;
+        }
+        .btnbubble{
+            border-radius:15px; 
+            border: 0px;
+            padding: 10px;
+            background: #FFF; 
+
+        }
+        .childskinny{
+            width: 50%;
+            margin: 0 auto;
+        }
+        .child80{
+            width: 95%;
+            margin: 0 auto;
+        }
+        #back{
+            position: absolute;
+            padding: 5px;
+            background-color: white;
+            border-radius: 10px;
+
+        }
+        .main-menu{
+            position: absolute;
+            padding: 5px;
+            background-color: white;
+            border-radius: 10px;
+            right: 10px;
+        }
+        #logo{
+            width: 50%;
+        }
+        .vertical{
+        	vertical-align: middle;
+        }
+        .width80{
+            width: 85%;
+            margin: 0 auto;
+        }
+        .txt-center{
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div data-role="page" id="splashscreen" class="splashscreen container txt-center">
+        <div data-role="main" class="ui-content">
+            <br><br>
+            <br><br>
+            <br><br>
+            <div id="splashdiv" class="width80">
+                <img src="img/w3dpo.png" alt="ICON" id="logo">
+                <h2 style="color:white;" class="inknut">World 3D Printing Olympiad 2017</h2>
+            </div>
+        </div>
+    </div>
+
+    <div data-role="page" id="select-category-page" class="container txt-center">
+    	<div data-role = "main" class="ui-content child vertical">
+            <div class="main-menu"><a href="#login-page">Main Menu</a></div>
+
+            <img src="img/w3dpo.png" alt="ICON" id="logo"><br><br>
+    		<button id="select-primary">Primary</button>
+    		<button id="select-middle">Middle</button>
+    		<button id="select-secondary">Secondary</button><br><br><br>
+    	</div>
+    </div>
+
+    <div data-role="page" id="login-page" class="container txt-center">
+        <div class="child">
+        <div data-role="main" class="ui-content">
+            <div class="width80">
+            <br>
+            <br>
+            <p class="text-white opensans">Username:</p>
+            <input type="text" name="login-username" id="login-username">
+            <br>
+            <p class="text-white opensans">Password:</p>
+            <input type="password" name="login-password" id="login-password">
+            <br>
+            <label id="error-message" class="text-white"></label>
+            <br>
+            <button id="btn-judge-login">Log In as Judge</button>
+            <button id="btn-admin-login">Log In as Admin</button>
+        </div>
+        </div> 
+        </div> 
+    </div>
+
+    <div data-role="page" id="judging-page" class="container nopadding txt-center">
+        <div data-role="main" class="ui-content child">
+            <div class="main-menu"><a href="#login-page">Main Menu</a></div>
+
+                <h2 class="center text-white" style="text-align: center">Scoring</h2><br>    
+                <div class="ui-field-contain" id="list-of-teams">
+                    <label for="select-team" class="opensans text-white">Select team:</label><br><br><br><br>
+                </div>
+        </div>
+    </div>
+
+
+    <div data-role="page" id="surprise-rubrics" class="container">
+        <div data-role="main" class="ui-content child">
+            <div id="back"><a href="#judging-page">back</a></div>
+            <div class="main-menu"><a href="#login-page">Main Menu</a></div>
+            <br><br><br>
+            <label id="label-judging-team" class="text-white txt-center"></label>
+            <br><br>
+            <div class="btnbubble"><b>Surprise Element Score (0-20)</b> <br></div>
+            <input type="number" name="surprise-score" id="surprise-score" placeholder="Score from 1 to 20">
+            <br>
+            <input type="checkbox" name="sportsmanship" id="sportsmanship" value="sportsmanship"><label for="sportsmanship">sportsmanship (+5 points)</label>
+            <button type="button" id="btn-submit-surprise">Submit</button> 
+        </div>
+    </div>
+
+    <div data-role="page" id="judging-rubrics" class="container nopadding">
+        <div data-role="main" class="ui-content">
+            <div class="child">
+            <div id="back"><a href="#judging-page">back</a></div>
+            <div class="main-menu"><a href="#login-page">Main Menu</a></div>
+            <br><br><br>
+            <label id="label-judging-team" class="text-white txt-center"></label>
+            <br><br>
+            <div class="btnbubble"><b>Criteria 1 : Context & Relevance (Weightage: 20 points)</b> <br><br>Justification for a proposed project or undertaking on the basis of its expected commercial benefit.</div>
+            <input type="number" name="criteria1" id="criteria1" placeholder="Criteria 1 Points">
+            <br>
+            <div class="btnbubble"><b>Criteria 2 : Efficiency & Feasibility (Weightage: 30 points)</b> <br> <br>Efficiency means ability to do something well without a waste of time or money. <br>Feasibility: Degree of being easily or conveniently done.</div>
+            <input type="number" name="criteria2" id="criteria2" placeholder="Criteria 2 Points">
+            <br>
+            <div class="btnbubble"><b>Criteria 3 : Innovation and Creativity (Weightage: 30 points)</b> <br><br>Creativity is the ability to think and act in ways that are new and novel. There are two kinds of creativity- Innovation & Invention.</div>
+            <input type="number" name="criteria3" id="criteria3" placeholder="Criteria 3 Points">
+            <br>
+            <div class="btnbubble"><b>Criteria 4 : Communication and Presentation (Weightage: 20 points)</b> <br><br>Any project, however innovative or creative, has to be effectively presented to the target audience for them to understand the thought process behind the creation.</div>
+            <input type="number" name="criteria4" id="criteria4" placeholder="Criteria 4 Points">
+            <br>
+            <button type="button" id="btn-submit-score">Submit</button> 
+        </div>
+        </div>
+    </div>
+
+    <div data-role="page" id="register-teams" class="container nopadding txt-center">
+        <div data-role="main" class="ui-content">
+            <div class="child">
+            <div class="main-menu"><a href="#login-page">Main Menu</a></div>
+
+            <h2 class="center text-white" style="text-align: center">Registration</h2><br>
+            <div id="register-form">
+                <p class="text-white opensans">Team Name</p>
+                <input type="text" name="team-name" id="team-name">
+                <br>
+                <p class="text-white opensans">Participant Names:</p>
+                <input type="text" name="team-members" id="team-members">
+                <br>
+                <p class="text-white opensans">Registration Code</p>
+                <input type="text" name="team-code" id="team-code">
+                <br>
+
+                <div class="ui-field-contain">
+                    <p class="text-white opensans">Category</p>
+                    <select name="team-category" id="team-category" data-native-menu="false">
+                        <option>Choose one...</option>
+                        <option value="Primary">Primary</option>
+                        <option value="Middle">Middle</option>
+                        <option value="Secondary">Secondary</option>
+                    </select>
+                </div>
+                <p id="warning-register" class="text-white opensans"></p>
+                <button type="button" id="btn-register-team">Submit</button>    
+                <br><br>
+                <button type="button" id="toggle-teams" onclick="$('#display-teams').fadeToggle()">View Registered Teams</button>
+                <div id="display-teams" class="text-white">hala</div>       
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="js/w3dpo.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+</body>
+
+</html>
