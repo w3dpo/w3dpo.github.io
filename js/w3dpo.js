@@ -211,7 +211,7 @@
                 var username = $("#login-username").val();
                 var password = $("#login-password").val();
                 firebase.auth().signInWithEmailAndPassword(username + "@gmail.com", password).then(e =>{
-                    judgeName = toLowerCase(username);
+                    judgeName = username.toLowerCase();
                     console.log(judgeName);
                     firebase.database().ref("Scoring/" + judgeName + "/FinishedTeams").once("value").then(function(snap){
                         tobedisabled = snap.val();
