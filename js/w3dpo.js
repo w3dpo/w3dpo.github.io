@@ -329,6 +329,8 @@
                         TotalAverage: total
                     });
 
+                firebase.database().ref("Teams/" + judgeCategory + "/" + teamToJudge + "/Marks/" + judgeName).set(total);
+
                     firebase.database().ref("Scoring/" + judgeName + "/FinishedTeams").once("value").then(function(snap){
                         var finishedTeams;
                         if(snap.val() == null)
