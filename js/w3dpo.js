@@ -459,7 +459,9 @@
 	            				firebase.database().ref("Teams/Secondary/" + teamtocompile + "/JudgesAvg").set(totalmarks / count);
 	            				console.log(thisteamsdata["SurpriseElementScore"]);
 	            				firebase.database().ref("Teams/Secondary/" + teamtocompile + "/CombinedScore").set((totalmarks/count) + thisteamsdata["SurpriseElementScore"]);        					
-            				}
+	            				console.log((totalmarks/count) + thisteamsdata["SurpriseElementScore"]);        					
+
+					}
 	            		}
             		});
             	});
@@ -499,6 +501,7 @@
 	            				firebase.database().ref("Teams/Primary/" + teamtocompile + "/JudgesAvg").set(totalmarks / count);
 	            				console.log(thisteamsdata["SurpriseElementScore"]);
 	            				firebase.database().ref("Teams/Primary/" + teamtocompile + "/CombinedScore").set((totalmarks/count) + thisteamsdata["SurpriseElementScore"]);
+	            				console.log((totalmarks/count) + thisteamsdata["SurpriseElementScore"]);        					
             				}
             			}
             		});
@@ -537,7 +540,9 @@
 	            				firebase.database().ref("Teams/Middle/" + teamtocompile + "/JudgesAvg").set(totalmarks / count);
 	            				console.log(thisteamsdata["SurpriseElementScore"]);
 	            				firebase.database().ref("Teams/Middle/" + teamtocompile + "/CombinedScore").set((totalmarks/count) + thisteamsdata["SurpriseElementScore"]);        					
-            				}
+	            				console.log((totalmarks/count) + thisteamsdata["SurpriseElementScore"]);        					
+
+					}
             			}
             		});
             	});
