@@ -423,4 +423,123 @@
                     $.mobile.changePage("#judging-page");
                 }
                 });
+                
+
+            var countforprimary, countformiddle, countforhigh;
+            var judgeslist = ["andrew","royson","pallavi","phil","sreejit","issah","sanjeera","khuram","hessa","abdulsalam","muthanna","waleed"];
+
+            $("#btn-generate-secondary-result").on("click", function(){
+            	firebase.database().ref("SecondaryCount").once("value").then(function(snap){
+            		countforsecondary = snap.val();
+            		console.log(countforsecondary);
+            		firebase.database().ref("Teams/Secondary").once("value").then(function(secondarydata){
+            			secondaryinfo = secondarydata.val();
+            			var teamtocompile;
+            			for(var i = 1; i<= countforsecondary; i++){
+            				if(i<10)
+            					teamtocompile = "S00" + i;
+            				else
+            					teamtocompile = "S0" + i;
+            				console.log(teamtocompile);
+            				var thisteamsdata = secondaryinfo[teamtocompile];
+            				var marksforthisteam = thisteamsdata["Marks"];
+            				console.log(marksforthisteam);
+            				var count = 0;
+            				var totalmarks=0;
+            				if(marksforthisteam){
+                				for(var j=0;j<judgeslist.length;j++){
+	            					var judgeforthisloop = judgeslist[j];
+	            					if(marksforthisteam[judgeforthisloop]){
+	            						count++;
+	            						totalmarks += marksforthisteam[judgeforthisloop];
+	            					}
+	            				}
+	            				console.log(totalmarks);
+	            				console.log(totalmarks / count);
+	            				firebase.database().ref("Teams/Secondary/" + teamtocompile + "/JudgesAvg").set(totalmarks / count);
+	            				console.log(thisteamsdata["SurpriseElementScore"]);
+	            				firebase.database().ref("Teams/Secondary/" + teamtocompile + "/CombinedScore").set((totalmarks/count) + thisteamsdata["SurpriseElementScore"]);        					
+            				}
+	            		}
+            		});
+            	});
+            });
+
+
+            
+            $("#btn-generate-primary-result").on("click", function(){
+
+            	firebase.database().ref("PrimaryCount").once("value").then(function(snap){
+            		countforprimary = snap.val();
+            		console.log(countforprimary);
+            		firebase.database().ref("Teams/Primary").once("value").then(function(primarydata){
+            			primaryinfo = primarydata.val();
+            			var teamtocompile;
+            			for(var i = 1; i<= countforprimary; i++){
+            				if(i<10)
+            					teamtocompile = "P00" + i;
+            				else
+            					teamtocompile = "P0" + i;
+            				console.log(teamtocompile);
+            				var thisteamsdata = primaryinfo[teamtocompile];
+            				var marksforthisteam = thisteamsdata["Marks"];
+            				console.log(marksforthisteam);
+            				var count = 0;
+            				var totalmarks=0;
+            				if(marksforthisteam){
+	            				for(var j=0;j<judgeslist.length;j++){
+	            					var judgeforthisloop = judgeslist[j];
+	            					if(marksforthisteam[judgeforthisloop]){
+	            						count++;
+	            						totalmarks += marksforthisteam[judgeforthisloop];
+	            					}
+	            				}            					
+	            				console.log(totalmarks);
+	            				console.log(totalmarks / count);
+	            				firebase.database().ref("Teams/Primary/" + teamtocompile + "/JudgesAvg").set(totalmarks / count);
+	            				console.log(thisteamsdata["SurpriseElementScore"]);
+	            				firebase.database().ref("Teams/Primary/" + teamtocompile + "/CombinedScore").set((totalmarks/count) + thisteamsdata["SurpriseElementScore"]);
+            				}
+            			}
+            		});
+            	});
+            });
+
+
+        	$("#btn-generate-middle-result").on("click", function(){
+            	firebase.database().ref("MiddleCount").once("value").then(function(snap){
+            		countformiddle = snap.val();
+            		console.log(countformiddle);
+            		firebase.database().ref("Teams/Middle").once("value").then(function(middledata){
+            			middleinfo = middledata.val();
+            			var teamtocompile;
+            			for(var i = 1; i<= countformiddle; i++){
+            				if(i<10)
+            					teamtocompile = "M00" + i;
+            				else
+            					teamtocompile = "M0" + i;
+            				console.log(teamtocompile);
+            				var thisteamsdata = middleinfo[teamtocompile];
+            				var marksforthisteam = thisteamsdata["Marks"];
+            				console.log(marksforthisteam);
+            				var count = 0;
+            				var totalmarks=0;
+            				if(marksforthisteam){
+                				for(var j=0;j<judgeslist.length;j++){
+	            					var judgeforthisloop = judgeslist[j];
+	            					if(marksforthisteam[judgeforthisloop]){
+	            						count++;
+	            						totalmarks += marksforthisteam[judgeforthisloop];
+	            					}
+	            				}
+	            				console.log(totalmarks);
+	            				console.log(totalmarks / count);
+	            				firebase.database().ref("Teams/Middle/" + teamtocompile + "/JudgesAvg").set(totalmarks / count);
+	            				console.log(thisteamsdata["SurpriseElementScore"]);
+	            				firebase.database().ref("Teams/Middle/" + teamtocompile + "/CombinedScore").set((totalmarks/count) + thisteamsdata["SurpriseElementScore"]);        					
+            				}
+            			}
+            		});
+            	});
+        	});
         });
